@@ -8,6 +8,7 @@
 namespace app\commands;
 
 use yii\console\Controller;
+use app\models\Articles;
 
 /**
  * This command echoes the first argument that you have entered.
@@ -26,5 +27,22 @@ class HelloController extends Controller
     public function actionIndex($message = 'hello world')
     {
         echo $message . "\n";
+    }
+    public function actionArticles($count = 50){
+
+        while($count--){
+            $add = new Articles();
+            $add->title = 'Title '.$count;
+            $add->index = 'Index '.$count;
+            $add->content = "Content ".$count;
+            $add->type = rand(1,6);
+            $add->status = 1;
+            $add->create_at = date("Y-m-d  H:i:s");
+            if($add->save())
+                print "[+]No.{$count} created OK!!\n";
+            else
+                print "[-]No.{$count} fault!!\n";
+
+        }
     }
 }
